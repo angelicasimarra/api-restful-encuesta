@@ -1,7 +1,7 @@
 var rutasUsuarios = require("express").Router();
+var usuariosController = require('../controladores/usuariosController');
 
-rutasUsuarios.get('/usuarios', (req, res) => {
-	res.send(" Usuarios ");
-});
+rutasUsuarios.get('/usuarios', usuariosController.getUsuarios);
+rutasUsuarios.get('/usuarios/:id', usuariosController.getUsuarios);
 
 module.exports = rutasUsuarios;
