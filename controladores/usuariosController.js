@@ -23,6 +23,51 @@ class usuariosController{
 		});
 	}
 	
+	insertarUsuario(req, res){
+		let data_usuario  = req.body;
+		db.query(`INSERT INTO usuarios (usuario_nombre, usuario_username) VALUES 
+					( '${data_usuario.nombre}', '${data_usuario.username}' ) ` ,function(err,result){
+			
+			res.contentType("application/json");
+		    if(err){
+		    	db.end();
+		        res.status(400).send(err);
+		    }
+		    
+			res.status(200).send({msj : 'Registro exitoso.'});
+				   
+	   });
+	}
+	
+	actualizarUsuario(req, res){
+		db.query(`UPDATE usuarios SET usuario_nombre = '${req.body.nombre}', usuario_username = '${req.body.username}' 
+					WHERE usuario_id = '${req.body.id}' ` ,function(err,result){
+			
+			res.contentType("application/json");
+		    if(err){
+		    	db.end();
+		        res.status(400).send(err);
+		    }
+		    
+			res.status(200).send({msj : 'Actualizacion exitosa.'});
+				   
+	   });
+	}
+	
+	eliminarUsuario(req, res){
+		db.query(` DELETE FROM usuarios WHERE usuario_id = '${req.params.id}' ` ,function(err,result){
+			
+			res.contentType("application/json");
+		    if(err){
+		    	db.end();
+		        res.status(400).send(err);
+		    }
+		    
+			res.status(200).send({msj : 'Registro eliminado.'});
+				   
+	   });
+	}
+	
 }
 
 module.exports = new usuariosController();
